@@ -9,8 +9,8 @@ public class MainController {
     public void run() {
         Date date = initDate();
         Distributor distributor = initDistributor();
-        List<String> strings = distributor.calculateWorkerList(date);
-        OutputView.printWorkers(date, strings);
+        List<String> workers = distributor.calculateWorkerList(date);
+        OutputView.printWorkers(date, workers);
     }
 
     private static Date initDate() {
@@ -38,5 +38,4 @@ public class MainController {
         String weekdayValue = InputView.readString(message);
         return Converter.stringToWorkers(weekdayValue);
     }
-
 }
