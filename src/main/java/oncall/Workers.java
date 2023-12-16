@@ -7,38 +7,30 @@ import oncall.message.ExceptionMessage;
 public class Workers {
     public static final int MIN_WORKER_SIZE = 5;
     public static final int MAX_WORKER_SIZE = 35;
-    public static final int MIN_WORKER_NAME_LENGTH = 5;
 
-    private final List<String> workers;
+
+    private final List<Worker> workers;
     private long sequence = 0L;
 
-    public Workers(List<String> workers) {
+    public Workers(List<Worker> workers) {
         validate(workers);
         this.workers = new ArrayList<>(workers);
     }
 
-    private void validate(List<String> workers) {
+    private void validate(List<Worker> workers) {
         validateSize(workers);
-        validateName(workers);
         validateDistinct(workers);
     }
 
-    private void validateSize(List<String> workers) {
+    private void validateSize(List<Worker> workers) {
         if (workers.size() < MIN_WORKER_SIZE || workers.size() > MAX_WORKER_SIZE) {
             throw new IllegalArgumentException(ExceptionMessage.INVALID_INPUT);
         }
     }
 
-    private void validateName(List<String> workers) {
-        workers.forEach(worker -> {
-            if (worker.length() > MIN_WORKER_NAME_LENGTH) {
-                throw new IllegalArgumentException(ExceptionMessage.INVALID_INPUT);
-            }
-        });
-    }
-
-    private void validateDistinct(List<String> workers) {
+    private void validateDistinct(List<Worker> workers) {
         int onlyWorkerCount = (int) workers.stream()
+                .map(Worker::getName)
                 .distinct()
                 .count();
         if (onlyWorkerCount != workers.size()) {
@@ -46,7 +38,7 @@ public class Workers {
         }
     }
 
-    public String getWorker() {
+    public Worker getWorker() {
         return workers.get((int) (sequence++ % workers.size()));
     }
 }

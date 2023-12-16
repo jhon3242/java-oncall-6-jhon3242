@@ -2,13 +2,13 @@ package oncall;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 import oncall.message.ExceptionMessage;
 
 public class Converter {
     public static Workers stringToWorkers(String workers) {
-        List<String> list = Arrays.stream(workers.split(","))
-                .collect(Collectors.toList());
+        List<Worker> list = Arrays.stream(workers.split(","))
+                .map(name -> new Worker(name.trim()))
+                .toList();
         return new Workers(list);
     }
 

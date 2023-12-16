@@ -16,8 +16,8 @@ public class Distributor {
         Date date = startDate;
         List<String> result = new ArrayList<>();
         while (true) {
-            String worker = getWorker(date);
-            result.add(worker);
+            Worker worker = getWorker(date);
+            result.add(worker.getName());
             if (date.hasNextDay()) {
                 date = Date.getNextDay(date);
                 continue;
@@ -39,7 +39,7 @@ public class Distributor {
         return result;
     }
 
-    public String getWorker(Date date) {
+    public Worker getWorker(Date date) {
         if (date.isDayOff()) {
             return weekendWorkers.getWorker();
         }
