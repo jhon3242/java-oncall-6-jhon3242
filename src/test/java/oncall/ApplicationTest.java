@@ -111,6 +111,26 @@ class ApplicationTest extends NsTest {
         });
     }
 
+    @Test
+    void 연속근무_공휴일_평일() {
+        assertSimpleTest(() -> {
+            run(
+                    "5,일",
+                    "준팍,도밥,루루,수아,글로,솔로스타,우코,슬링키,참새,도리,고니",
+                    "수아,루루,글로,솔로스타,우코,슬링키,참새,도리,준팍,도밥,고니"
+            );
+            assertThat(output()).contains(
+                    "5월 1일 일 수아" + LINE_SEPARATOR,
+                    "5월 2일 월 준팍" + LINE_SEPARATOR,
+                    "5월 3일 화 도밥" + LINE_SEPARATOR,
+                    "5월 4일 수 루루" + LINE_SEPARATOR,
+                    "5월 5일 목(휴일) 글로" + LINE_SEPARATOR,
+                    "5월 6일 금 수아" + LINE_SEPARATOR,
+                    "5월 7일 토 루루" + LINE_SEPARATOR
+            );
+        });
+    }
+
 
     @Override
     protected void runMain() {
