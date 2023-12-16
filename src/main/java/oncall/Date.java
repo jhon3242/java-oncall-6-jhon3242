@@ -4,15 +4,15 @@ import oncall.message.ExceptionMessage;
 
 public class Date {
     private final int month;
-    private final int day;
+    private final int date;
     private final DayOfWeek dayOfWeek;
 
-    public Date(int month, int startDay, DayOfWeek startDate) {
+    public Date(int month, int startDate, DayOfWeek startDayOfWeek) {
         validateMonth(month);
-        validateStartDay(startDay);
+        validateStartDay(startDate);
         this.month = month;
-        this.day = startDay;
-        this.dayOfWeek = startDate;
+        this.date = startDate;
+        this.dayOfWeek = startDayOfWeek;
     }
 
     private void validateMonth(int month) {
@@ -36,29 +36,29 @@ public class Date {
     }
 
     private boolean isFirstHalfHoliday() {
-        if (month == 1 && day == 1) {
+        if (month == 1 && date == 1) {
             return true;
         }
-        if (month == 3 && day == 1) {
+        if (month == 3 && date == 1) {
             return true;
         }
-        if (month == 5 && day == 5) {
+        if (month == 5 && date == 5) {
             return true;
         }
-        if (month == 6 && day == 6) {
+        if (month == 6 && date == 6) {
             return true;
         }
         return false;
     }
 
     private boolean isSecondHalfHoliday() {
-        if (month == 8 && day == 15) {
+        if (month == 8 && date == 15) {
             return true;
         }
-        if (month == 10 && (day == 3 || day == 9)) {
+        if (month == 10 && (date == 3 || date == 9)) {
             return true;
         }
-        if (month == 12 && day == 25) {
+        if (month == 12 && date == 25) {
             return true;
         }
         return false;
@@ -66,7 +66,7 @@ public class Date {
 
     public static Date getNextDay(Date date) {
         if (date.hasNextDay()) {
-            return new Date(date.month, date.day + 1, DayOfWeek.getNext(date.dayOfWeek));
+            return new Date(date.month, date.date + 1, DayOfWeek.getNext(date.dayOfWeek));
         }
         return null;
     }
@@ -74,25 +74,25 @@ public class Date {
     public boolean hasNextDay() {
         if (month <= 7) {
             if (month % 2 == 1) {
-                return day < 31;
+                return date < 31;
             }
             if (month == 2) {
-                return day < 28;
+                return date < 28;
             }
-            return day < 30;
+            return date < 30;
         }
         if (month % 2 == 0) {
-            return day < 31;
+            return date < 31;
         }
-        return day < 30;
+        return date < 30;
     }
 
     public int getMonth() {
         return month;
     }
 
-    public int getDay() {
-        return day;
+    public int getDate() {
+        return date;
     }
 
     public String getDayOfWeek() {
@@ -106,7 +106,7 @@ public class Date {
     public String toString() {
         return "Date{" +
                 "month=" + month +
-                ", day=" + day +
+                ", day=" + date +
                 ", startDate='" + dayOfWeek + '\'' +
                 '}';
     }

@@ -11,7 +11,7 @@ public class OutputView {
     }
 
     public static void printWorker(Date date, String worker) {
-        System.out.printf("%d월 %d일 %s %s\n", date.getMonth(), date.getDay(), date.getDayOfWeek(), worker);
+        System.out.printf("%d월 %d일 %s %s\n", date.getMonth(), date.getDate(), date.getDayOfWeek(), worker);
     }
 
     public static void printWorkers(Date startDate, List<String> strings) {
