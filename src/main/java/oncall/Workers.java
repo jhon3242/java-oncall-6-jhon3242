@@ -5,8 +5,12 @@ import java.util.List;
 import oncall.message.ExceptionMessage;
 
 public class Workers {
-    private int sequence = 0; // TODO long 으로 변경
-    private List<String> workers;
+    public static final int MIN_WORKER_SIZE = 5;
+    public static final int MAX_WORKER_SIZE = 35;
+    public static final int MIN_WORKER_NAME_LENGTH = 5;
+
+    private final List<String> workers;
+    private long sequence = 0L;
 
     public Workers(List<String> workers) {
         validate(workers);
@@ -14,14 +18,23 @@ public class Workers {
     }
 
     private void validate(List<String> workers) {
-        validateEmpty(workers);
+        validateSize(workers);
+        validateName(workers);
         validateDistinct(workers);
     }
 
-    private void validateEmpty(List<String> workers) {
-        if (workers.isEmpty()) {
+    private void validateSize(List<String> workers) {
+        if (workers.size() < MIN_WORKER_SIZE || workers.size() > MAX_WORKER_SIZE) {
             throw new IllegalArgumentException(ExceptionMessage.INVALID_INPUT);
         }
+    }
+
+    private void validateName(List<String> workers) {
+        workers.forEach(worker -> {
+            if (worker.length() > MIN_WORKER_NAME_LENGTH) {
+                throw new IllegalArgumentException(ExceptionMessage.INVALID_INPUT);
+            }
+        });
     }
 
     private void validateDistinct(List<String> workers) {
@@ -33,19 +46,7 @@ public class Workers {
         }
     }
 
-    public void switchFrontWorker() {
-        Utils.switchList(workers, 0, 1);
-    }
-
     public String getWorker() {
-        return workers.get(sequence++ % workers.size());
-    }
-
-    @Override
-    public String toString() {
-        return "Workers{" +
-                "sequence=" + sequence +
-                ", workers=" + workers +
-                '}';
+        return workers.get((int) (sequence++ % workers.size()));
     }
 }
