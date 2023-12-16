@@ -13,7 +13,7 @@ public class Worker {
     }
 
     private void validateName(String name) {
-        if (name == null || name.isEmpty()) {
+        if (name == null || name.isBlank()) {
             throw new IllegalArgumentException(ExceptionMessage.INVALID_INPUT);
         }
         if (name.length() > MIN_WORKER_NAME_LENGTH) {
