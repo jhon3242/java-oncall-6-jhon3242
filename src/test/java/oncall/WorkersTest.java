@@ -11,9 +11,20 @@ class WorkersTest {
 
     @DisplayName("근무자가 5명 미만인 경우 예외를 발생시킨다.")
     @Test
-    void init() {
+    void lessThen5() {
         Assertions.assertThatThrownBy(() -> {
             List<Worker> list = Arrays.stream("준팍,도밥,고니,수아".split(","))
+                    .map(name -> new Worker(name.trim()))
+                    .collect(Collectors.toList());
+            new Workers(list);
+        }).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("근무자가 2회 이상 편성된 경우 예외를 발생시킨다.")
+    @Test
+    void sameName() {
+        Assertions.assertThatThrownBy(() -> {
+            List<Worker> list = Arrays.stream("준팍,도밥,고니,수아,준팍".split(","))
                     .map(name -> new Worker(name.trim()))
                     .collect(Collectors.toList());
             new Workers(list);
