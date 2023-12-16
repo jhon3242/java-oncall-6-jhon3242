@@ -13,25 +13,29 @@ public class Distributor {
     }
 
     public List<String> calculateWorkerList(Date startDate) {
-        Date date = startDate;
-        List<String> result = new ArrayList<>();
+        List<String> workerLog = new ArrayList<>();
+        addWorkerToLog(startDate, workerLog);
+        return workerLog;
+    }
+
+    private void addWorkerToLog(Date date, List<String> workerLog) {
         while (true) {
             Worker worker = getWorker(date);
-            String workerName = worker.getName();
-            String lastAddWorker = getLastAddWorker(result);
-            if (lastAddWorker.equals(workerName)) {
+            if (isRepeatWorker(worker, workerLog)) {
                 worker = switchWorker(date, worker);
-                workerName = worker.getName();
             }
-
-            result.add(workerName);
+            workerLog.add(worker.getName());
             if (date.hasNextDay()) {
                 date = Date.getNextDay(date);
                 continue;
             }
             break;
         }
-        return handleWorkerList(result);
+    }
+
+    private boolean isRepeatWorker(Worker worker, List<String> prevList) {
+        String lastAddWorker = getLastAddWorker(prevList);
+        return lastAddWorker.equals(worker.getName());
     }
 
     private String getLastAddWorker(List<String> result) {
@@ -39,18 +43,6 @@ public class Distributor {
             return "";
         }
         return result.get(result.size() - 1);
-    }
-
-    private List<String> handleWorkerList(List<String> list) {
-        List<String> result = new ArrayList<>(list);
-        for (int i = 0; i < result.size() - 1; i++) {
-            String worker = result.get(i);
-            String nextWorker = result.get(i + 1);
-            if (worker.equals(nextWorker) && i + 2 < result.size()) {
-                Utils.switchList(result, i + 1, i + 2);
-            }
-        }
-        return result;
     }
 
     public Worker getWorker(Date date) {
