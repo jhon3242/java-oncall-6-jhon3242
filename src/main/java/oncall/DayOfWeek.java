@@ -12,7 +12,7 @@ public enum DayOfWeek {
     SATURDAY("토"),
     SUNDAY("일");
 
-    private String day;
+    private final String day;
 
     DayOfWeek(String day) {
         this.day = day;

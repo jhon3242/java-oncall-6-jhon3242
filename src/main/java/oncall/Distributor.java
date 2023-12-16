@@ -4,9 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Distributor {
-    private Workers weekdayWorkers;
-    private Workers weekendWorkers;
-    private String tempWorker = null;
+    private final Workers weekdayWorkers;
+    private final Workers weekendWorkers;
 
     public Distributor(Workers weekdayWorkers, Workers weekendWorkers) {
         this.weekdayWorkers = weekdayWorkers;
@@ -42,20 +41,9 @@ public class Distributor {
 
     public String getWorker(Date date) {
         if (date.isDayOff()) {
-//            date.nextDay(); // TODO : 넣을지 말지 고민
             return weekendWorkers.getWorker();
         }
-//        date.nextDay(); // TODO : 넣을지 말지 고민
         return weekdayWorkers.getWorker();
-    }
-
-    @Override
-    public String toString() {
-        return "Distributor{" +
-                "weekdayWorkers=" + weekdayWorkers +
-                ", weekendWorkers=" + weekendWorkers +
-                ", tempWorker='" + tempWorker + '\'' +
-                '}';
     }
 }
 

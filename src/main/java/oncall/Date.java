@@ -3,9 +3,9 @@ package oncall;
 import oncall.message.ExceptionMessage;
 
 public class Date {
-    private int month;
-    private int day;
-    private DayOfWeek dayOfWeek;
+    private final int month;
+    private final int day;
+    private final DayOfWeek dayOfWeek;
 
     public Date(int month, int startDay, DayOfWeek startDate) {
         validateMonth(month);
@@ -31,8 +31,11 @@ public class Date {
         return dayOfWeek.isWeekend() || isHoliday();
     }
 
-    // TODO 리팩터링
     private boolean isHoliday() {
+        return isFirstHalfHoliday() || isSecondHalfHoliday();
+    }
+
+    private boolean isFirstHalfHoliday() {
         if (month == 1 && day == 1) {
             return true;
         }
@@ -45,6 +48,10 @@ public class Date {
         if (month == 6 && day == 6) {
             return true;
         }
+        return false;
+    }
+
+    private boolean isSecondHalfHoliday() {
         if (month == 8 && day == 15) {
             return true;
         }
@@ -64,13 +71,6 @@ public class Date {
         return null;
     }
 
-    // TODO 리팩터링
-//    public void nextDay() {
-//        day++;
-//        String nextDayOfWeek = getNextDayOfWeek();
-//        dayOfWeek = nextDayOfWeek;
-//    }
-
     public boolean hasNextDay() {
         if (month <= 7) {
             if (month % 2 == 1) {
@@ -86,22 +86,6 @@ public class Date {
         }
         return day < 30;
     }
-
-//    public boolean isNotEnd() {
-//        if (month <= 7) {
-//            if (month % 2 == 1) {
-//                return day <= 31;
-//            }
-//            if (month == 2) {
-//                return day <= 28;
-//            }
-//            return day <= 30;
-//        }
-//        if (month % 2 == 0) {
-//            return day <= 31;
-//        }
-//        return day <= 30;
-//    }
 
     public int getMonth() {
         return month;
