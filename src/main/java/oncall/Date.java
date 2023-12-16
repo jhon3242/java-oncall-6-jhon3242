@@ -123,4 +123,13 @@ public class Date {
         }
         return day <= 30;
     }
+
+    @Override
+    public String toString() {
+        return "Date{" +
+                "month=" + month +
+                ", day=" + day +
+                ", startDate='" + startDate + '\'' +
+                '}';
+    }
 }

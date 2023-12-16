@@ -1,19 +1,24 @@
 package oncall;
 
+import oncall.message.ViewMessage;
+import oncall.view.InputView;
+import oncall.view.OutputView;
+
 public class MainController {
     public void run() {
-        Date date = new Date(5, "월");
-        Workers weekdayWorkers = Converter.stringToWorkers("준팍,도밥,고니,수아,루루,글로,솔로스타,우코,슬링키,참새,도리");
-        Workers weekendWorkers = Converter.stringToWorkers("수아,루루,글로,솔로스타,우코,슬링키,참새,도리,준팍,도밥,고니");
-
-        Distributor distributor = new Distributor(weekdayWorkers, weekendWorkers);
-
-        do {
-            distributor.getWorker(date);
-        } while (date.isNotEnd());
+        Date date = initDate();
+        System.out.println(date);
 
     }
 
-
+    private static Date initDate() {
+        try {
+            String value = InputView.readString(ViewMessage.INPUT_START_DATE);
+            return Converter.stringToDate(value);
+        } catch (IllegalArgumentException exception) {
+            OutputView.printException(exception);
+            return initDate();
+        }
+    }
 
 }
