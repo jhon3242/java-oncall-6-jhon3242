@@ -20,6 +20,17 @@ class WorkersTest {
         }).isInstanceOf(IllegalArgumentException.class);
     }
 
+    @DisplayName("근무자가 35명 초과인 경우 예외를 발생시킨다.")
+    @Test
+    void moreThen35() {
+        Assertions.assertThatThrownBy(() -> {
+            List<Worker> list = Arrays.stream("AA JY QP KS LZ RW MX YH FT AI DP GE BN HV UC LO WT RF EK IJ XA YN SQ PZ DM CG VB AO UJ HK TP SL NR OQ ZM XF".split(" "))
+                    .map(name -> new Worker(name.trim()))
+                    .collect(Collectors.toList());
+            new Workers(list);
+        }).isInstanceOf(IllegalArgumentException.class);
+    }
+
     @DisplayName("근무자가 2회 이상 편성된 경우 예외를 발생시킨다.")
     @Test
     void sameName() {
