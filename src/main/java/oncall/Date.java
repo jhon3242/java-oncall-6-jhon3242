@@ -9,6 +9,7 @@ public class Date {
 
     public Date(int month, int startDate, DayOfWeek startDayOfWeek) {
         validateMonth(month);
+        validateDate(month, startDate);
         validateStartDay(startDate);
         this.month = month;
         this.date = startDate;
@@ -23,6 +24,24 @@ public class Date {
 
     private void validateStartDay(int startDay) {
         if (startDay < 1 || startDay > 31) {
+            throw new IllegalArgumentException(ExceptionMessage.INVALID_INPUT);
+        }
+    }
+
+    private void validateDate(int month, int date) {
+        if (month % 2 == 1 && month < 8 && date > 31) {
+            throw new IllegalArgumentException(ExceptionMessage.INVALID_INPUT);
+        }
+        if (month % 2 == 0 && month < 8 && date > 30) {
+            throw new IllegalArgumentException(ExceptionMessage.INVALID_INPUT);
+        }
+        if (month % 2 == 1 && month > 7 && date > 30) {
+            throw new IllegalArgumentException(ExceptionMessage.INVALID_INPUT);
+        }
+        if (month % 2 == 0 && month > 7 && date > 31) {
+            throw new IllegalArgumentException(ExceptionMessage.INVALID_INPUT);
+        }
+        if (month == 2 && date > 28) {
             throw new IllegalArgumentException(ExceptionMessage.INVALID_INPUT);
         }
     }
@@ -100,14 +119,5 @@ public class Date {
             return dayOfWeek.getDay() +"(휴일)";
         }
         return dayOfWeek.getDay();
-    }
-
-    @Override
-    public String toString() {
-        return "Date{" +
-                "month=" + month +
-                ", day=" + date +
-                ", startDate='" + dayOfWeek + '\'' +
-                '}';
     }
 }

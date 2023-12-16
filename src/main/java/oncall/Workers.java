@@ -1,6 +1,5 @@
 package oncall;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import oncall.message.ExceptionMessage;
@@ -39,19 +38,21 @@ public class Workers {
 
     public Worker getWorker() {
         Worker result = workers.removeFirst();
-        handleSameWorkerOnList(result);
-        workers.addLast(result);
+        addToListAgain(result);
         return result;
     }
 
-    // 이미 제거했는데 리스트에 있는 경우(switchWorker 에서 잘못 추가된 경우)
-    private void handleSameWorkerOnList(Worker target) {
-        for (int i = 0; i < workers.size(); i++) {
-            if (workers.get(i).equals(target)) {
-                workers.remove(i);
-                return;
-            }
+    private void addToListAgain(Worker target) {
+        if (isAlreadyOnList(target)) {
+            // 순서 교체로 이전에 이미 리스트에 올라가 있는 경우
+            return;
         }
+        workers.addLast(target);
+    }
+
+    private boolean isAlreadyOnList(Worker target) {
+        return workers.stream()
+                .anyMatch(worker -> worker.equals(target));
     }
 
     public Worker switchWorker(Worker sameWorker) {
