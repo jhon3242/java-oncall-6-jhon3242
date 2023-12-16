@@ -4,6 +4,7 @@ import java.util.List;
 import oncall.message.ExceptionMessage;
 
 public class Workers {
+    private static int sequence = 0;
     private List<String> workers;
 
     public Workers(List<String> workers) {
@@ -29,5 +30,9 @@ public class Workers {
         if (onlyWorkerCount != workers.size()) {
             throw new IllegalArgumentException(ExceptionMessage.INVALID_INPUT);
         }
+    }
+
+    public String getWorker() {
+        return workers.get(sequence++ % workers.size());
     }
 }
