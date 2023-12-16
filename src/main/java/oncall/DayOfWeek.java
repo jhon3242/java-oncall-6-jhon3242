@@ -16,7 +16,7 @@ public enum DayOfWeek {
     }
 
     public static DayOfWeek getNext(Date date) {
-        date.nextDay();
+//        date.nextDay();
         throw new IllegalArgumentException();
     }
 

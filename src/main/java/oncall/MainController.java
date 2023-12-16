@@ -1,5 +1,6 @@
 package oncall;
 
+import java.util.List;
 import oncall.message.ViewMessage;
 import oncall.view.InputView;
 import oncall.view.OutputView;
@@ -8,8 +9,8 @@ public class MainController {
     public void run() {
         Date date = initDate();
         Distributor distributor = initDistributor();
-        System.out.println(date);
-        System.out.println(distributor);
+        List<String> strings = distributor.calculateWorkerList(date);
+        OutputView.printWorkers(date, strings);
     }
 
     private static Date initDate() {

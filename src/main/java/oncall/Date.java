@@ -5,18 +5,25 @@ import oncall.message.ExceptionMessage;
 public class Date {
     private int month;
     private int day;
-    private String startDate;
+    private String dayOfWeek;
 
-    public Date(int month, String startDate) {
+    public Date(int month, int startDay, String startDate) {
         validateMonth(month);
+        validateStartDay(startDay);
         validateStartDate(startDate);
         this.month = month;
-        this.day = 1;
-        this.startDate = startDate;
+        this.day = startDay;
+        this.dayOfWeek = startDate;
     }
 
     private void validateMonth(int month) {
         if (month < 1 || month > 12) {
+            throw new IllegalArgumentException(ExceptionMessage.INVALID_INPUT);
+        }
+    }
+
+    private void validateStartDay(int startDay) {
+        if (startDay < 1 || startDay > 31) {
             throw new IllegalArgumentException(ExceptionMessage.INVALID_INPUT);
         }
     }
@@ -73,55 +80,96 @@ public class Date {
     }
 
     private boolean isWeekend() {
-        return startDate.equals("토") || startDate.equals("일");
+        return dayOfWeek.equals("토") || dayOfWeek.equals("일");
+    }
+
+    public static Date getNextDay(Date date) {
+        if (date.hasNextDay()) {
+            String nextDayOfWeek = date.getNextDayOfWeek();
+            int nextDay = date.getDay() + 1;
+            Date next = new Date(date.month, nextDay, nextDayOfWeek);
+            return next;
+        }
+        return null;
     }
 
     // TODO 리팩터링
-    public void nextDay() {
-        day++;
-        if (startDate.equals("월")) {
-            startDate = "화";
-            return;
+//    public void nextDay() {
+//        day++;
+//        String nextDayOfWeek = getNextDayOfWeek();
+//        dayOfWeek = nextDayOfWeek;
+//    }
+
+    private String getNextDayOfWeek() {
+        if (dayOfWeek.equals("월")) {
+            return "화";
         }
-        if (startDate.equals("화")) {
-            startDate = "수";
-            return;
+        if (dayOfWeek.equals("화")) {
+            return "수";
         }
-        if (startDate.equals("수")) {
-            startDate = "목";
-            return;
+        if (dayOfWeek.equals("수")) {
+            return "목";
         }
-        if (startDate.equals("목")) {
-            startDate = "금";
-            return;
+        if (dayOfWeek.equals("목")) {
+            return "금";
         }
-        if (startDate.equals("금")) {
-            startDate = "토";
-            return;
+        if (dayOfWeek.equals("금")) {
+            return "토";
         }
-        if (startDate.equals("토")) {
-            startDate = "일";
-            return;
+        if (dayOfWeek.equals("토")) {
+            return "일";
         }
-        if (startDate.equals("일")) {
-            startDate = "월";
+        if (dayOfWeek.equals("일")) {
+            return "월";
         }
+        throw new IllegalArgumentException(ExceptionMessage.INVALID_INPUT);
     }
 
-    public boolean isNotEnd() {
+    public boolean hasNextDay() {
         if (month <= 7) {
             if (month % 2 == 1) {
-                return day <= 31;
+                return day < 31;
             }
             if (month == 2) {
-                return day <= 28;
+                return day < 28;
             }
-            return day <= 30;
+            return day < 30;
         }
         if (month % 2 == 0) {
-            return day <= 31;
+            return day < 31;
         }
-        return day <= 30;
+        return day < 30;
+    }
+
+//    public boolean isNotEnd() {
+//        if (month <= 7) {
+//            if (month % 2 == 1) {
+//                return day <= 31;
+//            }
+//            if (month == 2) {
+//                return day <= 28;
+//            }
+//            return day <= 30;
+//        }
+//        if (month % 2 == 0) {
+//            return day <= 31;
+//        }
+//        return day <= 30;
+//    }
+
+    public int getMonth() {
+        return month;
+    }
+
+    public int getDay() {
+        return day;
+    }
+
+    public String getDayOfWeek() {
+        if (isHoliday()) {
+            return dayOfWeek +"(휴일)";
+        }
+        return dayOfWeek;
     }
 
     @Override
@@ -129,7 +177,7 @@ public class Date {
         return "Date{" +
                 "month=" + month +
                 ", day=" + day +
-                ", startDate='" + startDate + '\'' +
+                ", startDate='" + dayOfWeek + '\'' +
                 '}';
     }
 }

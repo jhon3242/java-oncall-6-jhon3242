@@ -72,6 +72,46 @@ class ApplicationTest extends NsTest {
         });
     }
 
+    @Test
+    void 연속근무_평일_휴일() {
+        assertSimpleTest(() -> {
+            run(
+                    "5,월",
+                    "준팍,도밥,고니,수아,루루,글로,솔로스타,우코,슬링키,참새,도리",
+                    "수아,루루,글로,솔로스타,우코,슬링키,참새,도리,준팍,도밥,고니"
+            );
+            assertThat(output()).contains(
+                    "5월 1일 월 준팍" + LINE_SEPARATOR,
+                    "5월 2일 화 도밥" + LINE_SEPARATOR,
+                    "5월 3일 수 고니" + LINE_SEPARATOR,
+                    "5월 4일 목 수아" + LINE_SEPARATOR,
+                    "5월 5일 금(휴일) 루루" + LINE_SEPARATOR,
+                    "5월 6일 토 수아" + LINE_SEPARATOR
+            );
+        });
+    }
+
+    @Test
+    void 연속근무_휴일_평일() {
+        assertSimpleTest(() -> {
+            run(
+                    "10,월",
+                    "준팍,도밥,수아,루루,글로,솔로스타,우코,슬링키,참새,도리,고니",
+                    "수아,루루,글로,솔로스타,우코,슬링키,참새,도리,준팍,도밥,고니"
+            );
+            assertThat(output()).contains(
+                    "10월 1일 월 준팍" + LINE_SEPARATOR,
+                    "10월 2일 화 도밥" + LINE_SEPARATOR,
+                    "10월 3일 수(휴일) 수아" + LINE_SEPARATOR,
+                    "10월 4일 목 루루" + LINE_SEPARATOR,
+                    "10월 5일 금 수아" + LINE_SEPARATOR,
+                    "10월 6일 토 루루" + LINE_SEPARATOR,
+                    "10월 7일 일 글로" + LINE_SEPARATOR
+            );
+        });
+    }
+
+
     @Override
     protected void runMain() {
         Application.main(new String[]{});

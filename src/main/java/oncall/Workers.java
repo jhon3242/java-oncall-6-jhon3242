@@ -1,5 +1,6 @@
 package oncall;
 
+import java.util.ArrayList;
 import java.util.List;
 import oncall.message.ExceptionMessage;
 
@@ -9,7 +10,7 @@ public class Workers {
 
     public Workers(List<String> workers) {
         validate(workers);
-        this.workers = workers;
+        this.workers = new ArrayList<>(workers);
     }
 
     private void validate(List<String> workers) {
@@ -30,6 +31,10 @@ public class Workers {
         if (onlyWorkerCount != workers.size()) {
             throw new IllegalArgumentException(ExceptionMessage.INVALID_INPUT);
         }
+    }
+
+    public void switchFrontWorker() {
+        Utils.switchList(workers, 0, 1);
     }
 
     public String getWorker() {

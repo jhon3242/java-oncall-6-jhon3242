@@ -1,5 +1,8 @@
 package oncall;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Distributor {
     private Workers weekdayWorkers;
     private Workers weekendWorkers;
@@ -10,19 +13,32 @@ public class Distributor {
         this.weekendWorkers = weekendWorkers;
     }
 
-//    public String getNextWorker(String beforeWorker, Date date) {
-//        if (tempWorker != null) {
-//            String worker = tempWorker;
-//            tempWorker = null;
-//            return worker;
-//        }
-//        String worker = getWorker(date);
-//        if (worker.equals(beforeWorker)) {
-//            tempWorker = worker;
-//            return getWorker(date); // 두번 겹치는 경우도 다뤄야할까?
-//        }
-//        return worker;
-//    }
+    public List<String> calculateWorkerList(Date startDate) {
+        Date date = startDate;
+        List<String> result = new ArrayList<>();
+        while (true) {
+            String worker = getWorker(date);
+            result.add(worker);
+            if (date.hasNextDay()) {
+                date = Date.getNextDay(date);
+                continue;
+            }
+            break;
+        }
+        return handleWorkerList(result);
+    }
+
+    private List<String> handleWorkerList(List<String> list) {
+        List<String> result = new ArrayList<>(list);
+        for (int i = 0; i < result.size() - 1; i++) {
+            String worker = result.get(i);
+            String nextWorker = result.get(i + 1);
+            if (worker.equals(nextWorker) && i + 2 < result.size()) {
+                Utils.switchList(result, i + 1, i + 2);
+            }
+        }
+        return result;
+    }
 
     public String getWorker(Date date) {
         if (date.isDayOff()) {
