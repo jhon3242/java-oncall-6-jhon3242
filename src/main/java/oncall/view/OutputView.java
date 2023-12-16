@@ -1,7 +1,7 @@
 package oncall.view;
 
 import java.util.List;
-import oncall.Date;
+import oncall.domain.Date;
 import oncall.message.ViewMessage;
 
 public class OutputView {

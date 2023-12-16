@@ -1,4 +1,4 @@
-package oncall;
+package oncall.domain;
 
 import java.util.ArrayList;
 import java.util.List;

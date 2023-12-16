@@ -1,4 +1,4 @@
-package oncall;
+package oncall.domain;
 
 import java.util.Arrays;
 import oncall.message.ExceptionMessage;
