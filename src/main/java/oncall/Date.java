@@ -10,7 +10,7 @@ public class Date {
     public Date(int month, String startDate) {
         validateMonth(month);
         this.month = month;
-        this.day = 0;
+        this.day = 1;
         this.startDate = startDate;
     }
 
@@ -64,5 +64,37 @@ public class Date {
 
     private boolean isWeekend() {
         return startDate.equals("토") || startDate.equals("일");
+    }
+
+    // TODO 리팩터링
+    public void nextDay() {
+        day++;
+        if (startDate.equals("월")) {
+            startDate = "화";
+            return;
+        }
+        if (startDate.equals("화")) {
+            startDate = "수";
+            return;
+        }
+        if (startDate.equals("수")) {
+            startDate = "목";
+            return;
+        }
+        if (startDate.equals("목")) {
+            startDate = "금";
+            return;
+        }
+        if (startDate.equals("금")) {
+            startDate = "토";
+            return;
+        }
+        if (startDate.equals("토")) {
+            startDate = "일";
+            return;
+        }
+        if (startDate.equals("일")) {
+            startDate = "월";
+        }
     }
 }
