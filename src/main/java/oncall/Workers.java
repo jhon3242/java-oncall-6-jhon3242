@@ -35,4 +35,12 @@ public class Workers {
     public String getWorker() {
         return workers.get(sequence++ % workers.size());
     }
+
+    @Override
+    public String toString() {
+        return "Workers{" +
+                "sequence=" + sequence +
+                ", workers=" + workers +
+                '}';
+    }
 }

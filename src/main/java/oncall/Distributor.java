@@ -32,4 +32,14 @@ public class Distributor {
 //        date.nextDay(); // TODO : 넣을지 말지 고민
         return weekdayWorkers.getWorker();
     }
+
+    @Override
+    public String toString() {
+        return "Distributor{" +
+                "weekdayWorkers=" + weekdayWorkers +
+                ", weekendWorkers=" + weekendWorkers +
+                ", tempWorker='" + tempWorker + '\'' +
+                '}';
+    }
 }
+

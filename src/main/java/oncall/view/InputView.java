@@ -6,7 +6,7 @@ import oncall.message.ExceptionMessage;
 public class InputView {
 
     public static String readString(String message) {
-        System.out.println(message);
+        System.out.print(message);
         String value = Console.readLine().trim();
         validateBlank(value);
         return value;
