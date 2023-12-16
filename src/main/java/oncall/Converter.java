@@ -18,7 +18,7 @@ public class Converter {
             throw new IllegalArgumentException(ExceptionMessage.INVALID_INPUT);
         }
         validateNumber(result.get(0));
-        return new Date(Integer.parseInt(result.get(0)), 1, result.get(1));
+        return new Date(Integer.parseInt(result.get(0)), 1, DayOfWeek.findByString(result.get(1)));
     }
 
     private static void validateNumber(String value) {

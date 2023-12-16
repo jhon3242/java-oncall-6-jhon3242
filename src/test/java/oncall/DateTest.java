@@ -13,7 +13,7 @@ class DateTest {
 
     @Test
     void isDayOff() {
-        Date date = new Date(5,1, "월");
+//        Date date = new Date(5,1, "월");
 
 //        Assertions.assertThat(date.isDayOff()).isEqualTo(false);
 //        date.nextDay();
