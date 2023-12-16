@@ -1,5 +1,6 @@
 package oncall;
 
+import java.util.Objects;
 import oncall.message.ExceptionMessage;
 
 public class Date {
@@ -119,5 +120,22 @@ public class Date {
             return dayOfWeek.getDay() +"(휴일)";
         }
         return dayOfWeek.getDay();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Date date1 = (Date) o;
+        return month == date1.month && date == date1.date && dayOfWeek == date1.dayOfWeek;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(month, date, dayOfWeek);
     }
 }
