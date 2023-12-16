@@ -9,6 +9,7 @@ public class Date {
 
     public Date(int month, String startDate) {
         validateMonth(month);
+        validateStartDate(startDate);
         this.month = month;
         this.day = 1;
         this.startDate = startDate;
@@ -16,6 +17,15 @@ public class Date {
 
     private void validateMonth(int month) {
         if (month < 1 || month > 12) {
+            throw new IllegalArgumentException(ExceptionMessage.INVALID_INPUT);
+        }
+    }
+
+    private void validateStartDate(String startDate) {
+        if (startDate.length() != 1) {
+            throw new IllegalArgumentException(ExceptionMessage.INVALID_INPUT);
+        }
+        if (!"월화수목금토일".contains(startDate)) {
             throw new IllegalArgumentException(ExceptionMessage.INVALID_INPUT);
         }
     }
