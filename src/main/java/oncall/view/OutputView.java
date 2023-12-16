@@ -16,6 +16,7 @@ public class OutputView {
 
     public static void printWorkers(Date startDate, List<String> strings) {
         Date date = startDate;
+        System.out.println();
         for (String worker : strings) {
             printWorker(date, worker);
             date = Date.getNextDay(date);
