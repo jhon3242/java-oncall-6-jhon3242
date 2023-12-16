@@ -97,4 +97,20 @@ public class Date {
             startDate = "월";
         }
     }
+
+    public boolean isNotEnd() {
+        if (month <= 7) {
+            if (month % 2 == 1) {
+                return day <= 31;
+            }
+            if (month == 2) {
+                return day <= 28;
+            }
+            return day <= 30;
+        }
+        if (month % 2 == 0) {
+            return day <= 31;
+        }
+        return day <= 30;
+    }
 }

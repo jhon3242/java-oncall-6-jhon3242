@@ -4,7 +4,7 @@ import java.util.List;
 import oncall.message.ExceptionMessage;
 
 public class Workers {
-    private static int sequence = 0;
+    private int sequence = 0; // TODO long 으로 변경
     private List<String> workers;
 
     public Workers(List<String> workers) {
